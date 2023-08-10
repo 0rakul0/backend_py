@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('banco.db')
+conn = sqlite3.connect('./instance/banco.db')
 cursor = conn.cursor()
 
 cria_tabela = """
@@ -14,7 +14,7 @@ cria_tabela = """
 """
 
 cria_hotel = """
-     INSERT INTO hoteis VALUES ('alfa', 'Alfa Hotel', 4.3, 420.34, 'Rio de Janeiro')  
+     INSERT INTO hoteis VALUES ('alpha', 'alpha Hotel', 5.0, 400.00, 'Rio de Janeiro')  
 """
 
 cursor.execute(cria_tabela)
