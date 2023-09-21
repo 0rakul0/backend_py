@@ -1,30 +1,6 @@
 from flask_restful import Resource, reqparse
 from models.hotel import HotelModel
 
-hoteis = [
-    {
-        'hotel_id':'alfa',
-        'nome':'Alfa Hotel',
-        'estrelas':4.3,
-        'diaria':420.34,
-        'cidade':'Rio de Janeiro'
-    },
-    {
-        'hotel_id':'beta',
-        'nome':'Beta Hotel',
-        'estrelas':5.0,
-        'diaria':500.00,
-        'cidade':'Rio de Janeiro'
-    },
-    {
-        'hotel_id':'delta',
-        'nome':'Delta Hotel',
-        'estrelas':3.3,
-        'diaria':220.34,
-        'cidade':'Rio de Janeiro'
-    },
-]
-
 class Hoteis(Resource):
     def get(self):
         return {'hoteis':[hotel.json() for hotel in HotelModel.query.all()]}
@@ -54,7 +30,10 @@ class Hotel(Resource):
 
         ## metodo com modelo
         hotel = HotelModel(hotel_id, **dados)
-        hotel.save_hotel()
+        try:
+            hotel.save_hotel()
+        except:
+            return {"message":"erro interno 500"}, 500
         return hotel.json(), 200
 
 
@@ -70,13 +49,19 @@ class Hotel(Resource):
             return hotel_encontrado.json(), 200 # codigo de tudo certo
         else:
             hotel = HotelModel(hotel_id, **dados)
-            hotel.save_hotel()
+            try:
+                hotel.save_hotel()
+            except:
+                return {"message": "erro interno 500 ao atualizar"}, 500
             return hotel.json(), 201 # codigo de criado
 
     def delete(self, hotel_id):
         hotel = HotelModel.find_hotel(hotel_id)
         if hotel:
-            hotel.delete_hotel()
+            try:
+                hotel.save_hotel()
+            except:
+                return {"message": "erro interno 500 ao deletar"}, 500
             return {"message":"Hotel deletado"}
         else:
             return {"message":"Hotel não encontrado, erro ao apagar"}, 404

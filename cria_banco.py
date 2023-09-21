@@ -14,7 +14,7 @@ cria_tabela = """
 """
 
 cria_hotel = """
-     INSERT INTO hoteis VALUES ('alpha', 'alpha Hotel', 5.0, 400.00, 'Rio de Janeiro')  
+     INSERT INTO hoteis VALUES ('beta', 'Beta Hotel', 4.0, 300.00, 'São Paulo')  
 """
 
 cursor.execute(cria_tabela)
